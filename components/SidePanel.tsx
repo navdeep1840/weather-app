@@ -38,7 +38,7 @@ const SidePanel = ({ city, lat, long, data }: Props) => {
             Timezone: {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </p>
         </div>
-        <p className="text-bold uppercase  text-xl">
+        <p className="text-bold uppercase flex-shrink-0 self-start  text-xl">
           {new Date().toLocaleTimeString("en-GB", {
             hour: "numeric",
             minute: "numeric",
