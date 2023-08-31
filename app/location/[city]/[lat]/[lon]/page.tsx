@@ -4,6 +4,9 @@ import RainChart from "@/components/RainChart";
 import SidePanel from "@/components/SidePanel";
 import StatCard from "@/components/StatCard";
 import TempChart from "@/components/TempChart";
+import { WeatherInfo } from "@/typings";
+import { revalidateTag } from "next/cache";
+import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
 
@@ -16,20 +19,26 @@ type Props = {
 };
 
 function WeatherPage({ params }: Props) {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<WeatherInfo>();
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${params.lat}&longitude=${params.lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers,snowfall,snow_depth,windgusts_10m,uv_index,uv_index_clear_sky&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,uv_index_clear_sky_max&current_weather=true&timezone=GMT`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-        });
+      try {
+        await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${params.lat}&longitude=${params.lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers,snowfall,snow_depth,windgusts_10m,uv_index,uv_index_clear_sky&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,uv_index_clear_sky_max&current_weather=true&timezone=GMT`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            setData(data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    setData(fetchData());
+    fetchData();
   }, [params]);
 
   return (

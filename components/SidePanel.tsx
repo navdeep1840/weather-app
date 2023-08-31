@@ -2,12 +2,13 @@ import Image from "next/image";
 import CityPicker from "./CityPicker";
 import weatherCodeToString from "@/utils/weatherCodeToString";
 import { MoonIcon, SunIcon } from "@heroicons/react/20/solid";
+import { WeatherInfo } from "@/typings";
 
 type Props = {
   city: string;
   lat: string;
   long: string;
-  data: any;
+  data: WeatherInfo;
 };
 
 const SidePanel = ({ city, lat, long, data }: Props) => {

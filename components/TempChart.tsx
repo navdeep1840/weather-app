@@ -1,8 +1,9 @@
 "use client";
+import { WeatherInfo } from "@/typings";
 import { Card, AreaChart, Title } from "@tremor/react";
 
 type Props = {
-  data: any;
+  data: WeatherInfo;
 };
 
 const TempChart = ({ data }: Props) => {
@@ -15,7 +16,7 @@ const TempChart = ({ data }: Props) => {
     )
     .slice(0, 24);
 
-  const chartData = hourly?.map((hour: any, index: number) => ({
+  const chartData = hourly?.map((hour, index: number) => ({
     time: Number(hour),
     "UV Index": data?.hourly?.uv_index[index],
     "Temp (C)": data.hourly?.temperature_2m[index],
