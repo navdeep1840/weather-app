@@ -45,6 +45,12 @@ const CityPicker = (props: Props) => {
   const handleSelectedCountry = (option: option) => {
     setSelectedCountry(option);
     setSelectedCity(null);
+
+    if (!City.getCitiesOfCountry(option?.value?.isoCode as string)?.length) {
+      router.push(
+        `/location/${option?.label}/${option?.value.latitude}/${option?.value.longitude}`
+      );
+    }
   };
 
   const handleSelectedCity = (option: cityOption) => {

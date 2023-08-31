@@ -30,7 +30,7 @@ function WeatherPage({ params }: Props) {
     };
 
     setData(fetchData());
-  }, []);
+  }, [params]);
 
   return (
     <>
